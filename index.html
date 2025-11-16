@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orderly - SaaS Online Ordering System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --background: oklch(0.99 0 0); /* Almost white */
+        --foreground: oklch(0.22 0.04 20); /* Deep coffee brown - for dark text */
+        --card: oklch(1 0 0); /* White */
+        --card-foreground: oklch(0.22 0.04 20); 
+        --popover: oklch(0.98 0.01 90);
+        --popover-foreground: oklch(0.25 0.05 30);
+        --primary: oklch(0.7 0.1 80); /* Orange/Brown from screenshot */
+        --primary-foreground: oklch(1 0 0); /* White */
+        --secondary: oklch(0.35 0 0); /* Dark Grey from screenshot header */
+        --secondary-foreground: oklch(0.95 0 0); /* Light Grey for text on dark bg */
+        --muted: oklch(0.94 0.01 80);
+        --muted-foreground: oklch(0.35 0.03 30);
+        --accent: oklch(0.96 0.01 95);
+        --accent-foreground: oklch(0.25 0.04 20);
+        --destructive: oklch(0.55 0.13 30);
+        --destructive-foreground: oklch(0.98 0 0);
+        --border: oklch(0.9 0.01 80);
+        --input: oklch(0.9 0.01 80);
+        --ring: oklch(0.7 0.1 80);
+        --radius: 0.5rem;
+      }
+
+      .dark {
+        --background: oklch(0.1 0.02 20); /* Dark grey */
+        --foreground: oklch(0.95 0.01 90);
+        --card: oklch(0.20 0.03 20);
+        --card-foreground: oklch(0.95 0.01 90);
+        --popover: oklch(0.22 0.03 20);
+        --popover-foreground: oklch(0.95 0.01 90);
+        --primary: oklch(0.7 0.1 80);
+        --primary-foreground: oklch(0.10 0 0);
+        --secondary: oklch(0.8 0 0);
+        --secondary-foreground: oklch(0.1 0 0);
+        --muted: oklch(0.30 0.01 35);
+        --muted-foreground: oklch(0.80 0.01 80);
+        --accent: oklch(0.40 0.02 45);
+        --accent-foreground: oklch(0.98 0 0);
+        --destructive: oklch(0.60 0.12 30);
+        --destructive-foreground: oklch(1 0 0);
+        --border: oklch(0.40 0.01 45);
+        --input: oklch(0.40 0.01 45);
+        --ring: oklch(0.7 0.1 80);
+      }
+      
+      /* Dark mode overrides for status colors */
+      .dark .bg-green-100 { background-color: oklch(0.35 0.1 150 / 0.2); }
+      .dark .text-green-800 { color: oklch(0.8 0.1 150); }
+      .dark .bg-yellow-100 { background-color: oklch(0.5 0.1 80 / 0.2); }
+      .dark .text-yellow-800 { color: oklch(0.9 0.15 85); }
+      .dark .bg-blue-100 { background-color: oklch(0.4 0.1 230 / 0.2); }
+      .dark .text-blue-800 { color: oklch(0.8 0.1 230); }
+      .dark .bg-indigo-100 { background-color: oklch(0.4 0.1 260 / 0.2); }
+      .dark .text-indigo-800 { color: oklch(0.8 0.1 260); }
+      .dark .bg-red-100 { background-color: oklch(0.4 0.15 20 / 0.2); }
+      .dark .text-red-800 { color: oklch(0.8 0.2 20); }
+      .dark .bg-purple-100 { background-color: oklch(0.4 0.1 280 / 0.2); }
+      .dark .text-purple-800 { color: oklch(0.8 0.1 280); }
+
+      body {
+        background-color: var(--background);
+        color: var(--foreground);
+        min-height: 100vh;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              border: 'var(--border)',
+              input: 'var(--input)',
+              ring: 'var(--ring)',
+              background: 'var(--background)',
+              foreground: 'var(--foreground)',
+              primary: {
+                DEFAULT: 'var(--primary)',
+                foreground: 'var(--primary-foreground)',
+              },
+              secondary: {
+                DEFAULT: 'var(--secondary)',
+                foreground: 'var(--secondary-foreground)',
+              },
+              destructive: {
+                DEFAULT: 'var(--destructive)',
+                foreground: 'var(--destructive-foreground)',
+              },
+              muted: {
+                DEFAULT: 'var(--muted)',
+                foreground: 'var(--muted-foreground)',
+              },
+              accent: {
+                DEFAULT: 'var(--accent)',
+                foreground: 'var(--accent-foreground)',
+              },
+              popover: {
+                DEFAULT: 'var(--popover)',
+                foreground: 'var(--popover-foreground)',
+              },
+              card: {
+                DEFAULT: 'var(--card)',
+                foreground: 'var(--card-foreground)',
+              },
+            },
+            borderRadius: {
+              lg: 'var(--radius)',
+              md: 'calc(var(--radius) - 2px)',
+              sm: 'calc(var(--radius) - 4px)',
+            },
+            textShadow: {
+              sm: '1px 1px 2px var(--tw-shadow-color)',
+              DEFAULT: '2px 2px 4px var(--tw-shadow-color)',
+              lg: '4px 4px 8px var(--tw-shadow-color)',
+            },
+          }
+        },
+        plugins: [
+          function ({ matchUtilities, theme }) {
+            matchUtilities(
+              {
+                'text-shadow': (value) => ({
+                  textShadow: value,
+                }),
+              },
+              { values: theme('textShadow') }
+            )
+          },
+        ],
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "recharts": "https://aistudiocdn.com/recharts@^3.4.1",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.44.4"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
