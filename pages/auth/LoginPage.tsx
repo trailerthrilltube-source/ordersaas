@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
         setError(null);
 
         if (!isSupabaseActive) {
-            setError('Database connection is not configured. Running in offline mode.');
+            setError('Database connection is not configured. Please update `lib/supabaseCredentials.ts` with your Supabase URL and Key.');
             setLoading(false);
             return;
         }

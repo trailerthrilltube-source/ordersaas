@@ -32,7 +32,7 @@ const CheckoutPage: React.FC = () => {
             return;
         }
         if (!isSupabaseActive) {
-            setError("Cannot place order. Database not connected.");
+            setError("We're sorry, but we cannot process orders at this time. Please try again later.");
             return;
         }
 

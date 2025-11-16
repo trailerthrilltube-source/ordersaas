@@ -87,8 +87,13 @@ const StorefrontPage: React.FC = () => {
     
     useEffect(() => {
         const fetchStoreData = async () => {
-            if (!slug || !isSupabaseActive) {
-                setError("Store not found or database is not connected.");
+            if (!isSupabaseActive) {
+                setError("This store is currently unavailable. Please check back later.");
+                setLoading(false);
+                return;
+            }
+            if (!slug) {
+                setError("Store not found.");
                 setLoading(false);
                 return;
             }
